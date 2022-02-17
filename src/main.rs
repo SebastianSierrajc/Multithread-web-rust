@@ -1,5 +1,4 @@
 use std::time::{Duration, Instant};
-
 use actix::prelude::*;
 use actix_files::Files;
 use actix_web::{middleware, web, App, Error, HttpRequest, HttpResponse, HttpServer};
@@ -7,13 +6,12 @@ use actix_web_actors::ws;
 
 /// How often heartbeat pings are sent
 const HEARTBEAT_INTERVAL: Duration = Duration::from_secs(5);
-/// How long before lack of client response causes a timeout
+//  How long before lack of client response causes a timeout
 const CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 
 /// do websocket handshake and start `MyWebSocket` actor
 async fn ws_index(r: HttpRequest, stream: web::Payload) -> Result<HttpResponse, Error> {
     let res = ws::start(MyWebSocket::new(), &r, stream);
-    println!("{:?}", res);
     res
 }
 
@@ -31,6 +29,9 @@ impl Actor for MyWebSocket {
     /// Method is called on actor start. We start the heartbeat process here.
     fn started(&mut self, ctx: &mut Self::Context) {
         self.hb(ctx);
+        self.start_counter(ctx, Duration::from_secs(1), 1);
+        // self.start_counter(ctx, Duration::from_secs(2), 2);
+        // self.start_counter(ctx, Duration::from_secs(3), 3);
     }
 }
 
@@ -83,9 +84,14 @@ impl MyWebSocket {
                 // don't try to send a ping
                 return;
             }
-            
-            ctx.text("te hago ping");
+
             ctx.ping(b"");
+        });
+    }
+    
+    fn start_counter(&self, ctx: &mut <Self as Actor>::Context, interval : Duration, counter : i32) {
+        ctx.run_interval(interval, move |act, ctx| {
+            ctx.text(format!("{}", counter));
         });
     }
 }

@@ -1,5 +1,9 @@
 $(function () {
     var conn = null
+    var c1 = { s: 0, m: 0, h: 0 }
+    var c2 = 0
+    var c3 = 0
+    var offset
 
     function log(msg) {
         var control = $('#log')
@@ -15,14 +19,30 @@ $(function () {
             '/ws/'
         conn = new WebSocket(wsUri)
         log('Connecting...')
+
         conn.onopen = function () {
+            offset = Date.now()
             log('Connected.')
             update_ui()
         }
+
         conn.onmessage = function (e) {
+            if (e.data == '1') {
+                const t = (Date.now() - offset) / 1000
+                if (t > 59) {
+                    c1['s'] = 0
+                    c1['m'] += 1
+                    offset = Date.now()
+                } else {
+                    c1['s'] = Math.round(t)
+                }
+
+                console.log(`${c1['h']}:${c1['m']}:${c1['s']}`)
+            }
+
             log('Received: ' + e.data)
-            console.log(e.data)
         }
+
         conn.onclose = function () {
             log('Disconnected.')
             conn = null
