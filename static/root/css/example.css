@@ -9,3 +9,7 @@ h1 {
 img {
     transition: .5s ease-in-out;
 }
+
+.logo {
+    width: 100px;
+}
