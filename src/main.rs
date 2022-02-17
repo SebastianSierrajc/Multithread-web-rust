@@ -94,7 +94,7 @@ impl MyWebSocket {
     }
     
     fn start_counter(&self, ctx: &mut <Self as Actor>::Context, interval : Duration, counter : i32) {
-        ctx.run_interval(interval, move |act, ctx| {
+        ctx.run_interval(interval, move |_act, ctx| {
             ctx.text(format!("{}", counter));
         });
     }
