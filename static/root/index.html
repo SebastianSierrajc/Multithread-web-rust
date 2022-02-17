@@ -4,26 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/example.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/example.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
     <title>Thread counter</title>
 </head>
 
 <body>
-    <h1>Threads counter</h1>
-    <img class="logo" src="/images/logo.png" alt="Actix logo" />
-    <div>
-        <button id="connect">Connect</button>&nbsp;|&nbsp;Status:
-        <span id="status">disconnected</span>
-    </div>
-    <div id="log" style="width:20em;height:15em;overflow:auto;border:1px solid black">
-    </div>
-    <form id="chatform" onsubmit="return false;">
-        <input id="text" type="text" />
-        <input id="send" type="button" value="Send" />
-    </form>
-</body>
+
+    <body class="is-preload">
+
+        <!-- Header -->
+        <section id="header">
+            <div class="inner">
+                <span class="icon solid major fa-cloud"></span>
+                <h1>App web de hilos usando el lenguaje <strong>RUST</strong>.</h1>
+                <p>Integreantes:<br />
+                    Alejandro Vejarano, Sebastián Sierra & Michael Pinilla</p>
+                <br>
+
+                <ul class="box">
+                    <li>
+                        <p>Hilo 1: </p> <a class="button"></a>
+                    </li>
+                    <li>
+                        <p>Hilo 2: </p> <a class="button"></a>
+                    </li>
+                    <li>
+                        <p>Hilo 3: </p> <a class="button"></a>
+                    </li>
+                </ul>
+
+                <ul class="actions special">
+                    <li><a href="#one" class="button scrolly">Iniciar</a></li>
+                    <li><a href="#one" class="button scrolly">Matar/Fin</a></li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- Scripts -->
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/jquery.scrolly.min.js"></script>
+        <script src="/js/browser.min.js"></script>
+        <script src="/js/breakpoints.min.js"></script>
+        <script src="/js/util.js"></script>
+        <script src="/js/main.js"></script>
+    </body>
 
 </html>
