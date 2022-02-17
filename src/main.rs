@@ -12,7 +12,6 @@ const CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 
 /// do websocket handshake and start `MyWebSocket` actor
 async fn ws_index(r: HttpRequest, stream: web::Payload) -> Result<HttpResponse, Error> {
-    println!("{:?}", r);
     let res = ws::start(MyWebSocket::new(), &r, stream);
     println!("{:?}", res);
     res
@@ -84,7 +83,8 @@ impl MyWebSocket {
                 // don't try to send a ping
                 return;
             }
-
+            
+            ctx.text("te hago ping");
             ctx.ping(b"");
         });
     }
