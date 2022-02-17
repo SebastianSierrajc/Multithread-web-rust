@@ -29,9 +29,6 @@ impl Actor for MyWebSocket {
     /// Method is called on actor start. We start the heartbeat process here.
     fn started(&mut self, ctx: &mut Self::Context) {
         self.hb(ctx);
-        self.start_counter(ctx, Duration::from_secs(1), 1);
-        // self.start_counter(ctx, Duration::from_secs(2), 2);
-        // self.start_counter(ctx, Duration::from_secs(3), 3);
     }
 }
 
@@ -52,7 +49,14 @@ impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for MyWebSocket {
             Ok(ws::Message::Pong(_)) => {
                 self.hb = Instant::now();
             }
-            Ok(ws::Message::Text(text)) => ctx.text(text),
+            Ok(ws::Message::Text(text)) => {
+                let m = text.trim();
+                if m == "start" {
+                    self.start_counter(ctx, Duration::from_secs(1), 1);
+                    self.start_counter(ctx, Duration::from_secs(2), 2);
+                    self.start_counter(ctx, Duration::from_secs(3), 3);
+                }
+            },
             Ok(ws::Message::Binary(bin)) => ctx.binary(bin),
             Ok(ws::Message::Close(reason)) => {
                 ctx.close(reason);
